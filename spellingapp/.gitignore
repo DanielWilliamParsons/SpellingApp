@@ -11,6 +11,10 @@
 # production
 /build
 
+# certificates
+/certs/localhost-key.pem
+/certs/localhost.pem
+
 # misc
 .DS_Store
 .env.local
