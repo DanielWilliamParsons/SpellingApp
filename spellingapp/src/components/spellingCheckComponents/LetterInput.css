@@ -14,12 +14,12 @@ input:focus-visible.letter-input.focused {
     outline: none;
 }
 
-input:focus-visible.letter-input.focused.correct {
+input.letter-input.correct {
     box-shadow: 0px 0px 5px 5px rgba(46, 245, 39, 0.8);
     outline: none;
 }
 
-input:focus-visible.letter-input.focused.incorrect {
+input:focus-visible.letter-input.incorrect {
     box-shadow: 0px 0px 5px 5px rgba(245, 93, 39, 0.94);
     outline: none;
 }
