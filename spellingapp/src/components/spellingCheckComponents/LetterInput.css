@@ -9,17 +9,17 @@
     text-align: center;
 }
 
-input:focus-visible.letter-input.focused {
-    box-shadow: 0px 0 px 5px 5px rgba(81, 203, 238, 1);
-    outline: none;
-}
-
-input.letter-input.correct {
+input:focus-visible.letter-input.focused.incomplete  {
     box-shadow: 0px 0px 5px 5px rgba(46, 245, 39, 0.8);
     outline: none;
 }
 
-input:focus-visible.letter-input.incorrect {
+input.letter-input.correct {
+    box-shadow: 0px 0px 5px 5px rgba(10, 130, 20, 1);
+    outline: none;
+}
+
+input:focus-visible.letter-input.focused.incorrect {
     box-shadow: 0px 0px 5px 5px rgba(245, 93, 39, 0.94);
     outline: none;
 }

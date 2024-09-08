@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './LetterInput.css';
 
 
-const LetterInput = ({ word, userInputs, userCorrect, currentLetterIndex, inputRefs, handleLetterInput }) => {
+const LetterInput = ({ word, userInputs, userCorrect, inputRefs, handleLetterInput }) => {
 
     const [focusedIndexes, setFocusedIndexes] = useState(Array(word.length).fill(false));
 

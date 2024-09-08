@@ -16,7 +16,6 @@ const SpellingGameContainer = () => {
         currentWordIndex,
         userInputs,
         userCorrect,
-        currentLetterIndex,
         inputRefs,
         handleLetterInput
     } = useSpellingGame(words);
@@ -28,7 +27,6 @@ const SpellingGameContainer = () => {
                 word = { words[currentWordIndex].word }
                 userInputs = { userInputs }
                 userCorrect = { userCorrect }
-                currentLetterIndex = { currentLetterIndex }
                 inputRefs = { inputRefs }
                 handleLetterInput = { handleLetterInput }
             />

@@ -9,22 +9,22 @@
 
 import { useState, useEffect, useRef } from 'react';
 
-const useSpellingGame = (words = []) => {
+const useSpellingGame = (words) => {
     // The words input is an array of words
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
-    const [currentLetterIndex, setCurrentLetterIndex] = useState(0); // Do I need this one?
-    const [wordIsComplete, setWordIsComplete] = useState(false); // Do I need this one?
     
     // Keeps track of the alphabet inputs that the user has added; used to visually set and reset the inputs on the user's screen.
     const [userInputs, setUserInputs] = useState(
-        Array(words[0].length).fill('')
+        Array(words[0].word.length).fill('')
     );
 
     // Keeps track of whether the user's input is correct or incorrect
     // This is used to visually update the input highlights
     const [userCorrect, setUserCorrect] = useState(
-        Array(words[0].length).fill('incomplete')
+        Array(words[0].word.length).fill('incomplete')
     );
+    console.log(words[0].word.length);
+    console.log(userCorrect);
 
     const inputRefs = useRef([]); // An array of refs for each input on the form
 
@@ -53,15 +53,25 @@ const useSpellingGame = (words = []) => {
             setUserCorrect(updatedUserCorrect);
 
             // On the last letter we should prepare to move to the next word
+            // If we have reached the end of the word list, then we don't move on.
+            // This is where the game is over.
             if (index === words[currentWordIndex].word.length - 1) {
-                setTimeout(() => {
-                    moveToNextWord(); // Moves to the next word is half a second.
-                }, 500);
+                
+                // Check if the next word exists
+                if(words[currentWordIndex + 1]){
+                    setTimeout(() => {
+                        moveToNextWord(); // Moves to the next word in half a second.
+                    }, 500);
+                } else {
+                    // If the next word does not exist, we need to handle game over.
+                }
+
             } else {
                 // The letter is correct and we are not at the end of the word
                 console.log("Hooray!");
                 inputRefs.current[index + 1].focus(); // Put the focus onto the next input
             }
+
         } else {
             // The letter was incorrect.
             console.log("Not correct!");
@@ -74,9 +84,9 @@ const useSpellingGame = (words = []) => {
 
     const moveToNextWord = () => {
         setCurrentWordIndex(currentWordIndex + 1);
-        const userInputsReset = Array(words[currentWordIndex + 1].length).fill();
+        const userInputsReset = Array(words[currentWordIndex + 1].word.length).fill();
         setUserInputs(userInputsReset);
-        const updatedUserCorrect = Array(words[currentWordIndex + 1].length).fill('incomplete');
+        const updatedUserCorrect = Array(words[currentWordIndex + 1].word.length).fill('incomplete');
         setUserCorrect(updatedUserCorrect);
     }
 
@@ -84,7 +94,6 @@ const useSpellingGame = (words = []) => {
         currentWordIndex,
         userInputs,
         userCorrect,
-        currentLetterIndex,
         inputRefs,
         handleLetterInput,
     };
