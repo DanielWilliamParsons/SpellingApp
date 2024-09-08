@@ -1,9 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import './LetterInput.css';
 
-const LetterInput = () => {
+const LetterInput = ({ word, userInputs, currentLetterIndex, inputRefs, handleLetterInput }) => {
 
+    
     return(
-        <input />
+        <div>
+            {
+                word.split('').map((letter, index) => (
+                    <input 
+                        ref = { (el) => (inputRefs.current[index] = el) }
+                        className = 'letter-input'
+                        key = { index }
+                        type = "text"
+                        maxLength = "1"
+                        value = { userInputs[index] || '' }
+                        onChange = { event => handleLetterInput(event, letter, index) }
+                    />
+                ))
+            }
+        </div>
+        
     );
 };
 
