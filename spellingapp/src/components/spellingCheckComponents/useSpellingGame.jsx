@@ -9,7 +9,8 @@
 
 import { useState, useEffect, useRef } from 'react';
 
-const useSpellingGame = (words) => {
+const useSpellingGame = (words, hasGameStarted, endGame) => {
+
     // The words input is an array of words
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
     
@@ -30,10 +31,12 @@ const useSpellingGame = (words) => {
 
     // Focus the first input when the game loads
     useEffect(() => {
-        if (inputRefs.current[0]) {
+        if (hasGameStarted && inputRefs.current[0]) {
             inputRefs.current[0].focus();
+        } else if(hasGameStarted && inputRefs.current[currentWordIndex]) {
+            inputRefs.current[currentWordIndex].focus();
         }
-    }, [currentWordIndex]); // This will run when the game loads or when the word changes.
+    }, [currentWordIndex, hasGameStarted, inputRefs]); // This will run when the game loads or when the word changes.
 
     const handleLetterInput = (e, letter, index) => {
         console.log(e.target.value);
@@ -52,18 +55,24 @@ const useSpellingGame = (words) => {
             updatedUserCorrect[index] = 'correct';
             setUserCorrect(updatedUserCorrect);
 
-            // On the last letter we should prepare to move to the next word
-            // If we have reached the end of the word list, then we don't move on.
-            // This is where the game is over.
+            // On the last letter we should prepare to move to the next word,
             if (index === words[currentWordIndex].word.length - 1) {
                 
-                // Check if the next word exists
+                // Check if the next word exists - if not we must handle the game over.
                 if(words[currentWordIndex + 1]){
                     setTimeout(() => {
                         moveToNextWord(); // Moves to the next word in half a second.
                     }, 500);
                 } else {
                     // If the next word does not exist, we need to handle game over.
+                    // Give 0.5 seconds pause
+                    setTimeout(() => {
+                        inputRefs.current[0].focus();
+                        setCurrentWordIndex(0);
+                        resetUserInputs(0);
+                        endGame();
+                    }, 500);
+                    
                 }
 
             } else {
@@ -84,9 +93,14 @@ const useSpellingGame = (words) => {
 
     const moveToNextWord = () => {
         setCurrentWordIndex(currentWordIndex + 1);
-        const userInputsReset = Array(words[currentWordIndex + 1].word.length).fill();
+        resetUserInputs(currentWordIndex + 1);
+        
+    };
+
+    const resetUserInputs = (anIndex) => {
+        const userInputsReset = Array(words[anIndex].word.length).fill();
         setUserInputs(userInputsReset);
-        const updatedUserCorrect = Array(words[currentWordIndex + 1].word.length).fill('incomplete');
+        const updatedUserCorrect = Array(words[anIndex].word.length).fill('incomplete');
         setUserCorrect(updatedUserCorrect);
     }
 

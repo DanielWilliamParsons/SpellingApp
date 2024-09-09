@@ -1,5 +1,6 @@
 import React from 'react';
 import useSpellingGame from './useSpellingGame';
+import useGameControl from './useGameControl';
 import LetterInput from './LetterInput';
 
 
@@ -13,23 +14,36 @@ let words = [
 const SpellingGameContainer = () => {
 
     const {
+        startGame,
+        endGame,
+        hasGameStarted,
+    } = useGameControl();
+
+    const {
         currentWordIndex,
         userInputs,
         userCorrect,
         inputRefs,
         handleLetterInput
-    } = useSpellingGame(words);
-    
+    } = useSpellingGame(words, hasGameStarted, endGame);
 
     return (
         <div>
-            <LetterInput
-                word = { words[currentWordIndex].word }
-                userInputs = { userInputs }
-                userCorrect = { userCorrect }
-                inputRefs = { inputRefs }
-                handleLetterInput = { handleLetterInput }
-            />
+            {!hasGameStarted ? (
+                <div>
+                    <button onClick = { startGame }>Start Game</button>
+                </div>
+            ) : (
+                
+                <LetterInput
+                    word = { words[currentWordIndex].word }
+                    userInputs = { userInputs }
+                    userCorrect = { userCorrect }
+                    inputRefs = { inputRefs }
+                    handleLetterInput = { handleLetterInput }
+                />
+            )}
+            
         </div>
     )
 };
