@@ -1,0 +1,16 @@
+
+.start-button {
+    border-style: none;
+    font-size: 2rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0.3rem;
+    border-radius: 15px;
+}
+
+.start-button:hover {
+    background-color:rgb(81, 203, 238);
+}
+
+.start-button:active {
+    background-color: rgb(81, 210, 250);
+}

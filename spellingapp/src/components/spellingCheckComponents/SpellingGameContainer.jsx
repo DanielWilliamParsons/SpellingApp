@@ -2,6 +2,7 @@ import React from 'react';
 import useSpellingGame from './useSpellingGame';
 import useGameControl from './useGameControl';
 import LetterInput from './LetterInput';
+import './SpellingGameContainer.css';
 
 
 // Get the words data
@@ -31,7 +32,7 @@ const SpellingGameContainer = () => {
         <div>
             {!hasGameStarted ? (
                 <div>
-                    <button onClick = { startGame }>Start Game</button>
+                    <button className = "start-button" onClick = { startGame }>Start Game</button>
                 </div>
             ) : (
                 
