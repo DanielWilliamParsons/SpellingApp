@@ -33,10 +33,12 @@ const useSpellingGame = (words, hasGameStarted, endGame) => {
     useEffect(() => {
         if (hasGameStarted && inputRefs.current[0]) {
             inputRefs.current[0].focus();
-        } else if(hasGameStarted && inputRefs.current[currentWordIndex]) {
+        } else if (hasGameStarted && inputRefs.current[currentWordIndex]) {
             inputRefs.current[currentWordIndex].focus();
         }
     }, [currentWordIndex, hasGameStarted, inputRefs]); // This will run when the game loads or when the word changes.
+
+    
 
     const handleLetterInput = (e, letter, index) => {
         console.log(e.target.value);
@@ -104,12 +106,19 @@ const useSpellingGame = (words, hasGameStarted, endGame) => {
         setUserCorrect(updatedUserCorrect);
     }
 
+    const timeUp = () => {
+        setCurrentWordIndex(0);
+        resetUserInputs(0);
+    }
+    
+
     return {
         currentWordIndex,
         userInputs,
         userCorrect,
         inputRefs,
         handleLetterInput,
+        timeUp,
     };
 }
 

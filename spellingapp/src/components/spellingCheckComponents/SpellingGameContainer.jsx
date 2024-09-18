@@ -3,6 +3,8 @@ import useSpellingGame from './useSpellingGame';
 import useGameControl from './useGameControl';
 import LetterInput from './LetterInput';
 import './SpellingGameContainer.css';
+import CountDown from '../timerComponents/CountDown';
+import useCountDownControl from '../timerComponents/useCountDownControl';
 
 
 // Get the words data
@@ -18,6 +20,7 @@ const SpellingGameContainer = () => {
         startGame,
         endGame,
         hasGameStarted,
+        isGameOver
     } = useGameControl();
 
     const {
@@ -25,24 +28,47 @@ const SpellingGameContainer = () => {
         userInputs,
         userCorrect,
         inputRefs,
-        handleLetterInput
+        handleLetterInput,
+        timeUp
     } = useSpellingGame(words, hasGameStarted, endGame);
+
+    const {
+        isCountingDown,
+        startCountDown,
+        endCountDown
+    } = useCountDownControl(endGame, timeUp)
 
     return (
         <div>
             {!hasGameStarted ? (
                 <div>
-                    <button className = "start-button" onClick = { startGame }>Start Game</button>
+                    <button className = "start-button" onClick = { () => { startGame(); startCountDown();} }>Start Game</button>
                 </div>
             ) : (
-                
-                <LetterInput
-                    word = { words[currentWordIndex].word }
-                    userInputs = { userInputs }
-                    userCorrect = { userCorrect }
-                    inputRefs = { inputRefs }
-                    handleLetterInput = { handleLetterInput }
-                />
+                <div>
+                    <LetterInput
+                        word = { words[currentWordIndex].word }
+                        userInputs = { userInputs }
+                        userCorrect = { userCorrect }
+                        inputRefs = { inputRefs }
+                        handleLetterInput = { handleLetterInput }
+                    />
+                    <CountDown
+                        radius = { 70 }
+                        startTime = { 10 }
+                        isCountingDown = { isCountingDown }
+                        endCountDown = { endCountDown }
+                    />
+                </div>
+            )}
+            {isGameOver ? (
+                <div>
+                    <p>Game over!</p>
+                </div>
+            ) : (
+                <div>
+                    
+                </div>
             )}
             
         </div>

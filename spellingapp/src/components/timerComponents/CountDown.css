@@ -1,0 +1,16 @@
+
+.countdown-container {
+    position: relative;
+}
+
+.countdown-svg {
+    transform: rotate(-90deg);
+}
+
+
+.countdown-ring {
+    fill: none;
+    stroke: #00bfff;
+    stroke-width: 6.5;
+    transition: stroke-dashoffset 1s linear;
+}
