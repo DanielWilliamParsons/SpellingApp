@@ -4,4 +4,5 @@
 ![spellingGif](spellingapp/public/spellingGif.gif)
 
 - September 23rd
-![spellingGif2](spellingapp/public/spellingGif.gif)
+
+![spellingGif2](spellingapp/public/spellingGif2.gif)
