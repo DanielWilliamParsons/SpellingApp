@@ -9,7 +9,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 
-const useSpellingGame = (words, hasGameStarted, endGame) => {
+const useSpellingGame = (words, hasGameStarted, endGame, score, setScore) => {
 
     // The words input is an array of words
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -24,8 +24,6 @@ const useSpellingGame = (words, hasGameStarted, endGame) => {
     const [userCorrect, setUserCorrect] = useState(
         Array(words[0].word.length).fill('incomplete')
     );
-    console.log(words[0].word.length);
-    console.log(userCorrect);
 
     const inputRefs = useRef([]); // An array of refs for each input on the form
 
@@ -41,8 +39,6 @@ const useSpellingGame = (words, hasGameStarted, endGame) => {
     
 
     const handleLetterInput = (e, letter, index) => {
-        console.log(e.target.value);
-        console.log(index);
 
         // Update the empty inputs
         const updatedInputs = [...userInputs];
@@ -56,6 +52,8 @@ const useSpellingGame = (words, hasGameStarted, endGame) => {
             const updatedUserCorrect = [...userCorrect];
             updatedUserCorrect[index] = 'correct';
             setUserCorrect(updatedUserCorrect);
+            setScore(score => score + 1);
+            console.log(score);
 
             // On the last letter we should prepare to move to the next word,
             if (index === words[currentWordIndex].word.length - 1) {
@@ -72,6 +70,7 @@ const useSpellingGame = (words, hasGameStarted, endGame) => {
                         inputRefs.current[0].focus();
                         setCurrentWordIndex(0);
                         resetUserInputs(0);
+                        setScore(0); // Resets the score to zero.
                         endGame();
                     }, 500);
                     

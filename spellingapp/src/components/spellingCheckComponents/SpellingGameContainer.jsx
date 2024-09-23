@@ -5,6 +5,8 @@ import LetterInput from './LetterInput';
 import './SpellingGameContainer.css';
 import CountDown from '../timerComponents/CountDown';
 import useCountDownControl from '../timerComponents/useCountDownControl';
+import useScorer from '../scorerComponents/UseScorer';
+import Scorer from '../scorerComponents/Scorer'
 
 
 // Get the words data
@@ -24,13 +26,18 @@ const SpellingGameContainer = () => {
     } = useGameControl();
 
     const {
+        score,
+        setScore
+    } = useScorer();
+
+    const {
         currentWordIndex,
         userInputs,
         userCorrect,
         inputRefs,
         handleLetterInput,
         timeUp
-    } = useSpellingGame(words, hasGameStarted, endGame);
+    } = useSpellingGame(words, hasGameStarted, endGame, score, setScore);
 
     const {
         isCountingDown,
@@ -58,6 +65,9 @@ const SpellingGameContainer = () => {
                         startTime = { 10 }
                         isCountingDown = { isCountingDown }
                         endCountDown = { endCountDown }
+                    />
+                    <Scorer
+                        score = { score }
                     />
                 </div>
             )}
